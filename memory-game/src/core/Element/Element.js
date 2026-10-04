@@ -73,4 +73,10 @@ export class Element {
 
     return this;
   }
+
+  setText(text) {
+    this.#element.textContent = text ?? '';
+
+    return this;
+  }
 }
