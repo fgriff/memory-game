@@ -55,4 +55,22 @@ export class Element {
   onClick(handler) {
     return this.on('click', handler);
   }
+
+  addClass(className) {
+    this.#element.classList.add(className);
+
+    return this;
+  }
+
+  removeClass(className) {
+    this.#element.classList.remove(className);
+
+    return this;
+  }
+
+  toggleClass(className, force) {
+    this.#element.classList.toggle(className, force);
+
+    return this;
+  }
 }
