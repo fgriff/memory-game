@@ -1,0 +1,23 @@
+@use "../../scss/variables" as *;
+
+.header {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: $color-header-bg;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+
+  &__btn {
+    color: $color-btn-text;
+    background-color: $color-btn-bg;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
