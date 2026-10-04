@@ -1,5 +1,6 @@
 export class Element {
   #element;
+  #listeners = [];
 
   constructor({
     tagName = 'div',
@@ -42,5 +43,16 @@ export class Element {
     target.append(this.#element);
 
     return this;
+  }
+
+  on(eventName, handler, options) {
+    this.#element.addEventListener(eventName, handler, options);
+    this.#listeners.push({ eventName, handler, options });
+
+    return this;
+  }
+
+  onClick(handler) {
+    return this.on('click', handler);
   }
 }
