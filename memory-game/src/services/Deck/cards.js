@@ -1,4 +1,4 @@
-const importedCards = import.meta.glob('../../assets/cards/*.png', {
+const importedCards = import.meta.glob('../../assets/img/cards/*.png', {
   eager: true,
   import: 'default',
 });

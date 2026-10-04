@@ -1,0 +1,11 @@
+@use "../../scss/variables" as *;
+
+.game-field {
+  padding: 10px;
+  background-color: transparent;
+  display: grid;
+  grid-template-columns: repeat(4, $card-width);
+  grid-template-rows: repeat(4, $card-height);
+  gap: $card-gap;
+  justify-content: center;
+}
