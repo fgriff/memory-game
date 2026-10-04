@@ -1,15 +1,14 @@
 import { Element } from '../../core/Element/Element';
 import { Card } from '../Card/Card';
-import { createDeck } from '../../services/Deck/Deck';
 import './Board.scss';
 
 export class Board extends Element {
   #cards = [];
 
-  constructor() {
+  constructor({ deck }) {
     super({ classNames: 'game-field' });
 
-    this.#cards = createDeck().map((cardData) =>
+    this.#cards = deck.map((cardData) =>
       new Card({
         id: cardData.id,
         pairId: cardData.pairId,
