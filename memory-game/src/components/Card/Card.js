@@ -5,7 +5,7 @@ export class Card extends Element {
   #cardId;
   #pairId;
 
-  constructor({ id, pairId }) {
+  constructor({ id, pairId, name, imageSrc }) {
     super({
       classNames: 'card',
       attributes: {
@@ -28,6 +28,19 @@ export class Card extends Element {
     this.cardBack = new Element({
       classNames: 'card__face card__face_back',
     }).render(this.cardInner.element);
+
+    this.cardBack.element.append(
+      this.#createImage({ src: imageSrc, alt: name }),
+    );
+  }
+
+  #createImage({ src, alt = '' }) {
+    const img = document.createElement('img');
+    img.className = 'card__image';
+    img.src = src ?? '';
+    img.alt = alt;
+
+    return img;
   }
 
   get id() {
