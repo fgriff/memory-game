@@ -4,6 +4,9 @@ import './Card.scss';
 export class Card extends Element {
   #cardId;
   #pairId;
+  #isFlipped = false;
+  #isMatched = false;
+  #isDisabled = false;
 
   constructor({ id, pairId, name, imageSrc }) {
     super({
@@ -49,5 +52,69 @@ export class Card extends Element {
 
   get pairId() {
     return this.#pairId;
+  }
+
+  get isFlipped() {
+    return this.#isFlipped;
+  }
+
+  get isMatched() {
+    return this.#isMatched;
+  }
+
+  get isDisabled() {
+    return this.#isDisabled;
+  }
+
+  get isClickable() {
+    return !this.#isDisabled && !this.#isFlipped && !this.#isMatched;
+  }
+
+  flip() {
+    if (this.#isFlipped || this.#isMatched) {
+      return this;
+    }
+
+    this.#isFlipped = true;
+    this.addClass('flipped');
+
+    return this;
+  }
+
+  unflip() {
+    if (!this.#isFlipped) {
+      return this;
+    }
+
+    this.#isFlipped = false;
+    this.removeClass('flipped');
+
+    return this;
+  }
+
+  match() {
+    this.#isMatched = true;
+    this.addClass('matched');
+
+    return this;
+  }
+
+  setDisabled(value) {
+    this.#isDisabled = Boolean(value);
+    this.toggleClass('disabled', this.#isDisabled);
+
+    return this;
+  }
+
+  reset() {
+    this.removeClass('flipped');
+    this.removeClass('matched');
+    this.removeClass('disabled');
+
+    this.#isFlipped = false;
+    this.#isMatched = false;
+    this.#isDisabled = false;
+
+    return this;
   }
 }
