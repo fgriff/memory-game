@@ -61,6 +61,10 @@ export class Game {
     return this.#bus;
   }
 
+  startNewGame() {
+    this.#startNewGame();
+  }
+
   cardClickHandler(card) {
     if (this.#isFinished) {
       return;
@@ -112,9 +116,5 @@ export class Game {
       this.#isLocked = false;
       this.#bus.emit(EVENT_CARD_ENABLE, {});
     }, MATCH_DELAY_MS);
-  }
-
-  startNewGame() {
-    this.#startNewGame();
   }
 }
