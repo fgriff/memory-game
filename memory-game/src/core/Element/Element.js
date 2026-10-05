@@ -79,4 +79,12 @@ export class Element {
 
     return this;
   }
+
+  destroy() {
+    this.#listeners.forEach(({ eventName, handler, options }) => {
+      this.#element.removeEventListener(eventName, handler, options);
+    });
+    this.#listeners = [];
+    this.#element.remove();
+  }
 }

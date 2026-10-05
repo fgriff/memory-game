@@ -20,7 +20,20 @@ export class Game {
   }
 
   #startNewGame() {
+    if (this.#unmatchTimer !== null) {
+      clearTimeout(this.#unmatchTimer);
+      this.#unmatchTimer = null;
+    }
+
     this.#deck = createDeck();
+    this.#moves = 0;
+    this.#pairsFound = 0;
+    this.#firstCard = null;
+    this.#isLocked = false;
+    this.#isFinished = false;
+
+    this.#bus.emit('game:new', { deck: this.#deck });
+    this.#emitState();
   }
 
   #emitState() {
@@ -90,5 +103,9 @@ export class Game {
       this.#isLocked = false;
       this.#bus.emit('card:enable', {});
     }, MATCH_DELAY_MS);
+  }
+
+  startNewGame() {
+    this.#startNewGame();
   }
 }

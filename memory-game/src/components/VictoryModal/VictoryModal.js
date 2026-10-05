@@ -5,11 +5,13 @@ import './VictoryModal.scss';
 export class VictoryModal extends Element {
   #title;
   #movesText;
+  #onNewGame;
   #onClose;
 
-  constructor({ onClose } = {}) {
+  constructor({ onNewGame, onClose } = {}) {
     super({ classNames: 'victory' });
 
+    this.#onNewGame = onNewGame;
     this.#onClose = onClose;
 
     this.#title = new Element({
@@ -29,7 +31,9 @@ export class VictoryModal extends Element {
     new Button({
       text: 'Новая игра',
       classNames: 'victory__btn',
-    }).render(actions);
+    })
+      .render(actions)
+      .onClick(() => this.#onNewGame?.());
 
     new Button({
       text: 'Закрыть',

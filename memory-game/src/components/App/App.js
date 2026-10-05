@@ -25,6 +25,7 @@ export class App extends Element {
     this.#game = new Game();
 
     this.#header = new Header({
+      onNewGame: () => this.#game.startNewGame(),
       onOpenLeaderboard: () => this.#openLeaderboard(),
     }).render(this.element);
 
@@ -39,6 +40,10 @@ export class App extends Element {
     this.#modal = new Modal().render(this.element);
 
     this.#victoryContent = new VictoryModal({
+      onNewGame: () => {
+        this.#modal.close();
+        this.#game.startNewGame();
+      },
       onClose: () => this.#modal.close(),
     });
 
@@ -76,6 +81,10 @@ export class App extends Element {
       this.#board.cards.forEach((card) => card.setDisabled(false));
     });
     bus.subscribe('game:win', ({ moves }) => this.#winHandler(moves));
+    bus.subscribe('game:new', ({ deck }) => {
+      this.#board.destroy();
+      this.#board = this.#createBoard(deck);
+    });
   }
 
   #findCard(id) {
