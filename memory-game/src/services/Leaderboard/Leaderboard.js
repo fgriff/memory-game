@@ -1,6 +1,5 @@
 import { Storage } from '../Storage/Storage';
-
-const MAX_RESULTS = 10;
+import { LEADERS_COUNT } from '../../utils/constants';
 
 export class Leaderboard {
   static sort(results) {
@@ -17,7 +16,7 @@ export class Leaderboard {
     return Leaderboard.sort(Storage.getData());
   }
 
-  static getTop(limit = MAX_RESULTS) {
+  static getTop(limit = LEADERS_COUNT) {
     return Leaderboard.getAll().slice(0, limit);
   }
 
@@ -29,7 +28,7 @@ export class Leaderboard {
     const entry = { moves, date };
     const all = [...Storage.getData(), entry];
     const sorted = Leaderboard.sort(all);
-    const top = sorted.slice(0, MAX_RESULTS);
+    const top = sorted.slice(0, LEADERS_COUNT);
     Storage.saveData(top);
   }
 

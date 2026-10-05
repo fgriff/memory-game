@@ -3,6 +3,16 @@ import { Header } from '../Header/Header';
 import { Counter } from '../Counter/Counter';
 import { Board } from '../Board/Board';
 import { Game } from '../../game/Game';
+import {
+  EVENT_CARD_DISABLE,
+  EVENT_CARD_ENABLE,
+  EVENT_CARD_FLIP,
+  EVENT_CARD_MATCH,
+  EVENT_CARD_UNFLIP,
+  EVENT_GAME_NEW,
+  EVENT_GAME_WIN,
+  EVENT_STATE_UPDATE,
+} from '../../utils/constants';
 import { Modal } from '../Modal/Modal';
 import { VictoryModal } from '../VictoryModal/VictoryModal';
 import { LeaderboardModal } from '../LeaderboardModal/LeaderboardModal';
@@ -66,22 +76,22 @@ export class App extends Element {
   #bindGameEvents() {
     const bus = this.#game.bus;
 
-    bus.subscribe('state:update', ({ moves, pairsFound }) => {
+    bus.subscribe(EVENT_STATE_UPDATE, ({ moves, pairsFound }) => {
       this.#counter.setMoves(moves);
       this.#counter.setPairs(pairsFound);
     });
 
-    bus.subscribe('card:flip', ({ id }) => this.#findCard(id)?.flip());
-    bus.subscribe('card:unflip', ({ id }) => this.#findCard(id)?.unflip());
-    bus.subscribe('card:match', ({ id }) => this.#findCard(id)?.match());
-    bus.subscribe('card:disable', () => {
+    bus.subscribe(EVENT_CARD_FLIP, ({ id }) => this.#findCard(id)?.flip());
+    bus.subscribe(EVENT_CARD_UNFLIP, ({ id }) => this.#findCard(id)?.unflip());
+    bus.subscribe(EVENT_CARD_MATCH, ({ id }) => this.#findCard(id)?.match());
+    bus.subscribe(EVENT_CARD_DISABLE, () => {
       this.#board.cards.forEach((card) => card.setDisabled(true));
     });
-    bus.subscribe('card:enable', () => {
+    bus.subscribe(EVENT_CARD_ENABLE, () => {
       this.#board.cards.forEach((card) => card.setDisabled(false));
     });
-    bus.subscribe('game:win', ({ moves }) => this.#winHandler(moves));
-    bus.subscribe('game:new', ({ deck }) => {
+    bus.subscribe(EVENT_GAME_WIN, ({ moves }) => this.#winHandler(moves));
+    bus.subscribe(EVENT_GAME_NEW, ({ deck }) => {
       this.#board.destroy();
       this.#board = this.#createBoard(deck);
     });

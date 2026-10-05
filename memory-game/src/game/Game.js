@@ -1,8 +1,17 @@
 import { createDeck } from '../services/Deck/Deck';
 import { EventBus } from '../core/EventBus/EventBus';
-
-const TOTAL_PAIRS = 8;
-const MATCH_DELAY_MS = 1000;
+import {
+  EVENT_CARD_DISABLE,
+  EVENT_CARD_ENABLE,
+  EVENT_CARD_FLIP,
+  EVENT_CARD_MATCH,
+  EVENT_CARD_UNFLIP,
+  EVENT_GAME_NEW,
+  EVENT_GAME_WIN,
+  EVENT_STATE_UPDATE,
+  MATCH_DELAY_MS,
+  PAIRS_COUNT,
+} from '../utils/constants';
 
 export class Game {
   #bus;
@@ -32,15 +41,15 @@ export class Game {
     this.#isLocked = false;
     this.#isFinished = false;
 
-    this.#bus.emit('game:new', { deck: this.#deck });
+    this.#bus.emit(EVENT_GAME_NEW, { deck: this.#deck });
     this.#emitState();
   }
 
   #emitState() {
-    this.#bus.emit('state:update', {
+    this.#bus.emit(EVENT_STATE_UPDATE, {
       moves: this.#moves,
       pairsFound: this.#pairsFound,
-      totalPairs: TOTAL_PAIRS,
+      totalPairs: PAIRS_COUNT,
     });
   }
 
@@ -63,7 +72,7 @@ export class Game {
 
     if (!this.#firstCard) {
       this.#firstCard = card;
-      this.#bus.emit('card:flip', { id: card.id });
+      this.#bus.emit(EVENT_CARD_FLIP, { id: card.id });
 
       return;
     }
@@ -72,7 +81,7 @@ export class Game {
       return;
     }
 
-    this.#bus.emit('card:flip', { id: card.id });
+    this.#bus.emit(EVENT_CARD_FLIP, { id: card.id });
     this.#moves += 1;
     this.#emitState();
 
@@ -81,27 +90,27 @@ export class Game {
 
     if (first.pairId === card.pairId) {
       this.#pairsFound += 1;
-      this.#bus.emit('card:match', { id: first.id });
-      this.#bus.emit('card:match', { id: card.id });
+      this.#bus.emit(EVENT_CARD_MATCH, { id: first.id });
+      this.#bus.emit(EVENT_CARD_MATCH, { id: card.id });
       this.#emitState();
 
-      if (this.#pairsFound === TOTAL_PAIRS) {
+      if (this.#pairsFound === PAIRS_COUNT) {
         this.#isFinished = true;
-        this.#bus.emit('game:win', { moves: this.#moves });
+        this.#bus.emit(EVENT_GAME_WIN, { moves: this.#moves });
       }
 
       return;
     }
 
     this.#isLocked = true;
-    this.#bus.emit('card:disable', {});
+    this.#bus.emit(EVENT_CARD_DISABLE, {});
 
     this.#unmatchTimer = setTimeout(() => {
       this.#unmatchTimer = null;
-      this.#bus.emit('card:unflip', { id: first.id });
-      this.#bus.emit('card:unflip', { id: card.id });
+      this.#bus.emit(EVENT_CARD_UNFLIP, { id: first.id });
+      this.#bus.emit(EVENT_CARD_UNFLIP, { id: card.id });
       this.#isLocked = false;
-      this.#bus.emit('card:enable', {});
+      this.#bus.emit(EVENT_CARD_ENABLE, {});
     }, MATCH_DELAY_MS);
   }
 

@@ -1,6 +1,5 @@
 import { CARD_IMAGES } from './cards';
-
-const PAIRS_COUNT = 8;
+import { PAIRS_COUNT } from '../../utils/constants';
 
 function shuffle(array) {
   const result = array.slice();

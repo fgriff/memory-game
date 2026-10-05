@@ -1,7 +1,6 @@
 import { Element } from '../../core/Element/Element';
+import { PAIRS_COUNT } from '../../utils/constants';
 import './Counter.scss';
-
-const TOTAL_PAIRS = 8;
 
 export class Counter extends Element {
   #movesCount;
@@ -29,7 +28,7 @@ export class Counter extends Element {
   }
 
   setPairs(value) {
-    this.#pairsCount.setText(`Пары: ${value} из ${TOTAL_PAIRS}`);
+    this.#pairsCount.setText(`Пары: ${value} из ${PAIRS_COUNT}`);
 
     return this;
   }

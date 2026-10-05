@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'fgriff-memory-game';
+import { STORAGE_KEY } from '../../utils/constants';
 
 export class Storage {
   static getData() {

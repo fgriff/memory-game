@@ -1,0 +1,12 @@
+export const EVENT_STATE_UPDATE = 'state:update';
+export const EVENT_CARD_FLIP = 'card:flip';
+export const EVENT_CARD_UNFLIP = 'card:unflip';
+export const EVENT_CARD_MATCH = 'card:match';
+export const EVENT_CARD_DISABLE = 'card:disable';
+export const EVENT_CARD_ENABLE = 'card:enable';
+export const EVENT_GAME_WIN = 'game:win';
+export const EVENT_GAME_NEW = 'game:new';
+export const MATCH_DELAY_MS = 1000;
+export const PAIRS_COUNT = 8;
+export const LEADERS_COUNT = 10;
+export const STORAGE_KEY = 'fgriff-memory-game';
