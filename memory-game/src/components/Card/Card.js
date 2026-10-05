@@ -67,18 +67,6 @@ export class Card extends Element {
     return this.#pairId;
   }
 
-  get isFlipped() {
-    return this.#isFlipped;
-  }
-
-  get isMatched() {
-    return this.#isMatched;
-  }
-
-  get isDisabled() {
-    return this.#isDisabled;
-  }
-
   get isClickable() {
     return !this.#isDisabled && !this.#isFlipped && !this.#isMatched;
   }
