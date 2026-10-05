@@ -23,10 +23,14 @@ export function createDeck() {
 
   const doubled = pairs.flatMap((pair) => [pair, pair]);
 
-  return shuffle(doubled).map((card, index) => ({
+  const cards = shuffle(doubled).map((card, index) => ({
     id: index,
     pairId: card.pairId,
     name: card.name,
     imageSrc: card.imageSrc,
   }));
+
+  console.log(cards.map((card) => card.pairId));
+
+  return cards;
 }

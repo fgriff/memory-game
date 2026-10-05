@@ -10,13 +10,7 @@ export class Card extends Element {
   #onSelect;
 
   constructor({ id, pairId, name, imageSrc, onSelect }) {
-    super({
-      classNames: 'card',
-      attributes: {
-        'data-card-id': String(id),
-        'data-pair-id': String(pairId),
-      },
-    });
+    super({ classNames: 'card' });
 
     this.#cardId = id;
     this.#pairId = pairId;
