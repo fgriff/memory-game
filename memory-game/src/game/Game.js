@@ -30,5 +30,9 @@ export class Game {
 
       return;
     }
+
+    if (this.#firstCard.id === card.id) {
+      return;
+    }
   }
 }
