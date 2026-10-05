@@ -7,8 +7,9 @@ export class Card extends Element {
   #isFlipped = false;
   #isMatched = false;
   #isDisabled = false;
+  #onSelect;
 
-  constructor({ id, pairId, name, imageSrc }) {
+  constructor({ id, pairId, name, imageSrc, onSelect }) {
     super({
       classNames: 'card',
       attributes: {
@@ -19,6 +20,7 @@ export class Card extends Element {
 
     this.#cardId = id;
     this.#pairId = pairId;
+    this.#onSelect = onSelect;
 
     this.cardInner = new Element({ classNames: 'card__inner' }).render(
       this.element,
@@ -35,6 +37,8 @@ export class Card extends Element {
     this.cardBack.element.append(
       this.#createImage({ src: imageSrc, alt: name }),
     );
+
+    this.onClick(() => this.#clickHandler());
   }
 
   #createImage({ src, alt = '' }) {
@@ -44,6 +48,10 @@ export class Card extends Element {
     img.alt = alt;
 
     return img;
+  }
+
+  #clickHandler() {
+    this.#onSelect?.(this);
   }
 
   get id() {

@@ -4,9 +4,12 @@ import './Board.scss';
 
 export class Board extends Element {
   #cards = [];
+  #onCardSelect;
 
-  constructor({ deck }) {
+  constructor({ deck, onSelect }) {
     super({ classNames: 'game-field' });
+
+    this.#onCardSelect = onSelect;
 
     this.#cards = deck.map((cardData) =>
       new Card({
@@ -14,7 +17,12 @@ export class Board extends Element {
         pairId: cardData.pairId,
         name: cardData.name,
         imageSrc: cardData.imageSrc,
+        onSelect: (card) => this.#onCardSelect?.(card),
       }).render(this.element),
     );
+  }
+
+  get cards() {
+    return this.#cards;
   }
 }

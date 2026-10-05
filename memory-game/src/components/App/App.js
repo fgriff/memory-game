@@ -26,11 +26,26 @@ export class App extends Element {
     }).render(this.element);
 
     this.#board = this.#createBoard(this.#game.deck);
+
+    this.#bindGameEvents();
   }
 
   #createBoard(deck) {
-    const board = new Board({ deck }).render(this.#boardContainer);
+    const board = new Board({
+      deck,
+      onSelect: (card) => this.#game.cardClickHandler(card),
+    }).render(this.#boardContainer);
 
     return board;
+  }
+
+  #bindGameEvents() {
+    const bus = this.#game.bus;
+
+    bus.subscribe('card:flip', ({ id }) => this.#findCard(id)?.flip());
+  }
+
+  #findCard(id) {
+    return this.#board.cards.find((card) => card.id === id);
   }
 }
