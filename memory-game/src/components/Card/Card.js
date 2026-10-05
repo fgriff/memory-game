@@ -46,11 +46,16 @@ export class Card extends Element {
     img.className = 'card__image';
     img.src = src ?? '';
     img.alt = alt;
+    img.draggable = false;
 
     return img;
   }
 
   #clickHandler() {
+    if (!this.isClickable) {
+      return;
+    }
+
     this.#onSelect?.(this);
   }
 
