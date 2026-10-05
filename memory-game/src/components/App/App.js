@@ -5,6 +5,8 @@ import { Board } from '../Board/Board';
 import { Game } from '../../game/Game';
 import { Modal } from '../Modal/Modal';
 import { VictoryModal } from '../VictoryModal/VictoryModal';
+import { LeaderboardModal } from '../LeaderboardModal/LeaderboardModal';
+import { Leaderboard } from '../../services/Leaderboard/Leaderboard';
 import './App.scss';
 
 export class App extends Element {
@@ -15,13 +17,16 @@ export class App extends Element {
   #boardContainer;
   #modal;
   #victoryContent;
+  #leaderboardContent;
 
   constructor() {
     super({ classNames: 'app' });
 
     this.#game = new Game();
 
-    this.#header = new Header().render(this.element);
+    this.#header = new Header({
+      onOpenLeaderboard: () => this.#openLeaderboard(),
+    }).render(this.element);
 
     this.#counter = new Counter().render(this.element);
 
@@ -34,6 +39,10 @@ export class App extends Element {
     this.#modal = new Modal().render(this.element);
 
     this.#victoryContent = new VictoryModal({
+      onClose: () => this.#modal.close(),
+    });
+
+    this.#leaderboardContent = new LeaderboardModal({
       onClose: () => this.#modal.close(),
     });
 
@@ -74,7 +83,13 @@ export class App extends Element {
   }
 
   #winHandler(moves) {
+    Leaderboard.addResult(moves);
     this.#victoryContent.setMoves(moves);
     this.#modal.open(this.#victoryContent);
+  }
+
+  #openLeaderboard() {
+    this.#leaderboardContent.refresh();
+    this.#modal.open(this.#leaderboardContent);
   }
 }

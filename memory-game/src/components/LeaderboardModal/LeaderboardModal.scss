@@ -1,0 +1,79 @@
+@use "../../scss/variables" as *;
+
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__title {
+    margin: 0;
+    font-size: 24px;
+    text-align: center;
+    color: $color-text;
+  }
+
+  &__body {
+    margin-bottom: 20px;
+    max-height: 50vh;
+    overflow: auto;
+  }
+
+  &__empty {
+    padding: 24px 8px;
+    text-align: center;
+    color: $color-text-muted;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+
+    th,
+    td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      font-weight: 700;
+      color: $color-text;
+      z-index: 1;
+    }
+
+    tbody tr:hover {
+      background-color: #f9fafb;
+    }
+
+    td:first-child,
+    th:first-child {
+      width: 60px;
+      text-align: center;
+    }
+
+    td:nth-child(2),
+    th:nth-child(2) {
+      width: 80px;
+      text-align: center;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__btn {
+    color: $color-btn-text;
+    background-color: $color-btn-bg;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
