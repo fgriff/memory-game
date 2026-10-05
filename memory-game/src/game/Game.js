@@ -2,6 +2,7 @@ import { createDeck } from '../services/Deck/Deck';
 import { EventBus } from '../core/EventBus/EventBus';
 
 const TOTAL_PAIRS = 8;
+const MATCH_DELAY_MS = 1000;
 
 export class Game {
   #bus;
@@ -9,6 +10,8 @@ export class Game {
   #moves = 0;
   #pairsFound = 0;
   #firstCard = null;
+  #isLocked = false;
+  #unmatchTimer = null;
 
   constructor(bus = new EventBus()) {
     this.#bus = bus;
@@ -36,6 +39,10 @@ export class Game {
   }
 
   cardClickHandler(card) {
+    if (this.#isLocked) {
+      return;
+    }
+
     if (!this.#firstCard) {
       this.#firstCard = card;
       this.#bus.emit('card:flip', { id: card.id });
@@ -62,5 +69,16 @@ export class Game {
 
       return;
     }
+
+    this.#isLocked = true;
+    this.#bus.emit('card:disable', {});
+
+    this.#unmatchTimer = setTimeout(() => {
+      this.#unmatchTimer = null;
+      this.#bus.emit('card:unflip', { id: first.id });
+      this.#bus.emit('card:unflip', { id: card.id });
+      this.#isLocked = false;
+      this.#bus.emit('card:enable', {});
+    }, MATCH_DELAY_MS);
   }
 }

@@ -48,7 +48,14 @@ export class App extends Element {
     });
 
     bus.subscribe('card:flip', ({ id }) => this.#findCard(id)?.flip());
+    bus.subscribe('card:unflip', ({ id }) => this.#findCard(id)?.unflip());
     bus.subscribe('card:match', ({ id }) => this.#findCard(id)?.match());
+    bus.subscribe('card:disable', () => {
+      this.#board.cards.forEach((card) => card.setDisabled(true));
+    });
+    bus.subscribe('card:enable', () => {
+      this.#board.cards.forEach((card) => card.setDisabled(false));
+    });
   }
 
   #findCard(id) {
