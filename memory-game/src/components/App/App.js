@@ -3,6 +3,8 @@ import { Header } from '../Header/Header';
 import { Counter } from '../Counter/Counter';
 import { Board } from '../Board/Board';
 import { Game } from '../../game/Game';
+import { Modal } from '../Modal/Modal';
+import { VictoryModal } from '../VictoryModal/VictoryModal';
 import './App.scss';
 
 export class App extends Element {
@@ -11,6 +13,8 @@ export class App extends Element {
   #counter;
   #board;
   #boardContainer;
+  #modal;
+  #victoryContent;
 
   constructor() {
     super({ classNames: 'app' });
@@ -26,6 +30,12 @@ export class App extends Element {
     }).render(this.element);
 
     this.#board = this.#createBoard(this.#game.deck);
+
+    this.#modal = new Modal().render(this.element);
+
+    this.#victoryContent = new VictoryModal({
+      onClose: () => this.#modal.close(),
+    });
 
     this.#bindGameEvents();
   }
@@ -56,9 +66,15 @@ export class App extends Element {
     bus.subscribe('card:enable', () => {
       this.#board.cards.forEach((card) => card.setDisabled(false));
     });
+    bus.subscribe('game:win', ({ moves }) => this.#winHandler(moves));
   }
 
   #findCard(id) {
     return this.#board.cards.find((card) => card.id === id);
+  }
+
+  #winHandler(moves) {
+    this.#victoryContent.setMoves(moves);
+    this.#modal.open(this.#victoryContent);
   }
 }

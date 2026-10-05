@@ -12,6 +12,7 @@ export class Game {
   #firstCard = null;
   #isLocked = false;
   #unmatchTimer = null;
+  #isFinished = false;
 
   constructor(bus = new EventBus()) {
     this.#bus = bus;
@@ -39,6 +40,10 @@ export class Game {
   }
 
   cardClickHandler(card) {
+    if (this.#isFinished) {
+      return;
+    }
+
     if (this.#isLocked) {
       return;
     }
@@ -66,6 +71,11 @@ export class Game {
       this.#bus.emit('card:match', { id: first.id });
       this.#bus.emit('card:match', { id: card.id });
       this.#emitState();
+
+      if (this.#pairsFound === TOTAL_PAIRS) {
+        this.#isFinished = true;
+        this.#bus.emit('game:win', { moves: this.#moves });
+      }
 
       return;
     }

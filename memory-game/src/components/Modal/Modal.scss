@@ -1,0 +1,64 @@
+@use "../../scss/variables" as *;
+
+.modal {
+  border: none;
+  background: transparent;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+
+  &::backdrop {
+    background-color: $color-modal-overlay;
+  }
+
+  &[open] {
+    animation: modal-pop-in 0.2s ease-out;
+  }
+
+  &[open]::backdrop {
+    animation: modal-fade-in 0.15s ease-out;
+  }
+
+  &__window {
+    padding: 24px 28px;
+    min-width: 320px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    border-radius: 14px;
+    background: $color-modal-bg;
+    color: $color-text;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    overflow: auto;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-pop-in {
+  from {
+    transform: translate(-50%, -50%) translateY(8px) scale(0.98);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,37 @@
+@use "../../scss/variables" as *;
+
+.victory {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+
+  &__title {
+    margin: 0;
+    font-size: 26px;
+    color: $color-text;
+  }
+
+  &__moves {
+    font-size: 18px;
+    color: $color-text-muted;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    color: $color-btn-text;
+    background-color: $color-btn-bg;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
