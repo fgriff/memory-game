@@ -38,7 +38,7 @@
     }
 
     &_back {
-      background-color: lightgreen;
+      background-color: $color-card-back;
       transform: rotateY(180deg);
     }
   }
@@ -50,5 +50,10 @@
     user-select: none;
     pointer-events: none;
     display: block;
+  }
+
+  &.matched &__face_back {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: $color-card-matched;
   }
 }

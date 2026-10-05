@@ -42,7 +42,13 @@ export class App extends Element {
   #bindGameEvents() {
     const bus = this.#game.bus;
 
+    bus.subscribe('state:update', ({ moves, pairsFound }) => {
+      this.#counter.setMoves(moves);
+      this.#counter.setPairs(pairsFound);
+    });
+
     bus.subscribe('card:flip', ({ id }) => this.#findCard(id)?.flip());
+    bus.subscribe('card:match', ({ id }) => this.#findCard(id)?.match());
   }
 
   #findCard(id) {
