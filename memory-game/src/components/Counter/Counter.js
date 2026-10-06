@@ -7,7 +7,7 @@ export class Counter extends Element {
   #pairsCount;
 
   constructor() {
-    super({ classNames: 'counter' });
+    super({ tagName: 'section', classNames: 'counter' });
 
     this.#movesCount = new Element({ classNames: 'counter__item' }).render(
       this.element,

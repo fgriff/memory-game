@@ -42,6 +42,7 @@ export class App extends Element {
     this.#counter = new Counter().render(this.element);
 
     this.#boardContainer = new Element({
+      tagName: 'section',
       classNames: 'app__board-container',
     }).render(this.element);
 
