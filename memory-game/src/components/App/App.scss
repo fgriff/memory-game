@@ -1,0 +1,15 @@
+.app {
+  margin: 0 auto;
+  padding: 10px 0;
+  max-width: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  &__board-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}

@@ -1,0 +1,63 @@
+@use "../../scss/variables" as *;
+
+.card {
+  width: $card-width;
+  height: $card-height;
+  perspective: 1000px;
+  user-select: none;
+  cursor: pointer;
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform $transition-duration;
+    transform-style: preserve-3d;
+  }
+
+  &.flipped &__inner {
+    transform: rotateY(180deg);
+  }
+
+  &__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: $card-radius;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &_front {
+      background-color: $color-card-shirt;
+      color: white;
+    }
+
+    &_back {
+      background-color: $color-card-back;
+      transform: rotateY(180deg);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+    pointer-events: none;
+    display: block;
+  }
+
+  &.matched &__face_back {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: $color-card-matched;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}

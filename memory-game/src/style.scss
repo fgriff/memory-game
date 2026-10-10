@@ -1,0 +1,41 @@
+@use "./scss/variables" as *;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+html {
+  font-size: 10px;
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, $color-bg-start, $color-bg-end);
+  font-size: 1.6rem;
+
+  &.modal-open {
+    overflow: hidden;
+  }
+}
